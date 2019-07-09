@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+>
+
+    <!-- Scans the classpath of this application for @Components to deploy as beans -->
+    <context:annotation-config/>
+    <context:component-scan base-package="su.opencode"/>
+    <mvc:default-servlet-handler/>
+
+    <!-- Forwards requests to the "/" resource to the "welcome" view -->
+    <mvc:view-controller path="/"/>
+
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven>
+        <mvc:async-support default-timeout="10000"/>
+        <mvc:message-converters>
+            <bean id="messageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <beans:property name="objectMapper" ref="jacksonObjectMapper"/>
+                <beans:property name="supportedMediaTypes">
+                    <beans:array>
+                        <beans:value>text/html</beans:value>
+                        <beans:value>application/json</beans:value>
+                    </beans:array>
+                </beans:property>
+            </beans:bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <mvc:resources mapping="/**/*.jsp" location="/js" cache-period="0">
+        <mvc:cache-control s-maxage="600"
+                           must-revalidate="true"
+                           proxy-revalidate="true"
+                           max-age="6000000"
+                           no-cache="false"
+                           no-store="false"/>
+    </mvc:resources>
+    <!--    <mvc:resources mapping="/**/*.css" location="/css"/>
+        <mvc:resources mapping="/**/*.ico" location="/images"/>
+        <mvc:resources mapping="/**/*.png" location="/images"/>
+        <mvc:resources mapping="/**/*.js" location="/js"/>
+        <mvc:resources mapping="/**/*.css.jsp" location="/css"/>
+        <mvc:resources mapping="/**/*-js.jsp" location="/js"/>
+        <mvc:resources mapping="/**/*.gif" location="/images"/>
+        <mvc:resources mapping="/**/*.jpg" location="/images"/>
+        <mvc:resources mapping="/**/*.jpeg" location="/images"/>-->
+
+    <!-- Application Message Bundle -->
+    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="/WEB-INF/classes/messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="cacheSeconds" value="0"/>
+    </beans:bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="cacheSeconds" value="0"/>
+    </bean>
+
+    <!-- Resolves view names to protected .jsp resources within the /WEB-INF/views directory -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </beans:bean>
+
+    <!--Upload file maxSize = 5 Mb-->
+    <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:messages.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <import resource="beans.xml"/>
+<!--    <import resource="database.xml"/>-->
+    <import resource="jpa-database.xml"/>
+
+</beans:beans>
