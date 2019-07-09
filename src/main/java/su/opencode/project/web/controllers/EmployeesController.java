@@ -13,10 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by popov on 13.11.18.
- */
-
 @Controller
 @RequestMapping("/employees")
 public class EmployeesController {
@@ -113,7 +109,7 @@ public class EmployeesController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("employees", employees);
         modelAndView.addObject("companies", companies);
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("employees");
         return modelAndView;
     }
 }
