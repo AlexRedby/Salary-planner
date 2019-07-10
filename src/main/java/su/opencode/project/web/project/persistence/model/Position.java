@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "COMPANIES")
-public class Company implements Serializable {
+@Table(name = "POSITIONS")
+public class Position implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,18 +15,6 @@ public class Company implements Serializable {
 
     @Column(name = "NAME", nullable = false)
     private String name;
-
-    public Company() {
-    }
-
-    public Company(String name) {
-        this.name = name;
-    }
-
-    public Company(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
@@ -48,9 +36,9 @@ public class Company implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return Objects.equals(id, company.id) &&
-                Objects.equals(name, company.name);
+        Position position = (Position) o;
+        return Objects.equals(id, position.id) &&
+                Objects.equals(name, position.name);
     }
 
     @Override
@@ -60,9 +48,9 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "Company { " +
+        return "Position {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                " }";
+                '}';
     }
 }

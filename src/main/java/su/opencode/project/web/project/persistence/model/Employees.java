@@ -2,12 +2,10 @@ package su.opencode.project.web.project.persistence.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * Created by popov on 12.10.18.
- */
 @Entity
 @Table(name = "EMPLOYEES")
 public class Employees implements Serializable {
@@ -16,18 +14,41 @@ public class Employees implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
+
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
+
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
+
     @Column(name = "BIRTH_DATE", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date birthDate;
+
+    @Column(name = "SALARY", nullable = false)
+    private int salary;
+
+    @Column(name = "LAST_SALARY_DATE")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private LocalDate lastSalaryDate;
+
+    @Column(name = "AVG_TIME_RECEIVING_SALARY")
+    private int averageTimeOfReceivingSalary;
+
     @ManyToOne
-    @JoinColumn(name = "COMPANY_ID", nullable = false)
-    private Company company;
+    @Column(name = "POSITION", nullable = false)
+    private Position position;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEPARTMENT_ID", nullable = false)
+    private Department department;
+
+    @Column(name = "IN_WORKPLACE", nullable = false)
+    private boolean inWorkplace;
+
     @Column(name = "CREATED_BY", nullable = false)
     private String createdBy;
+
     @Column(name = "CREATED_WHEN", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date createdWhen;
@@ -72,12 +93,52 @@ public class Employees implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public Company getCompany() {
-        return company;
+    public int getSalary() {
+        return salary;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public LocalDate getLastSalaryDate() {
+        return lastSalaryDate;
+    }
+
+    public void setLastSalaryDate(LocalDate lastSalaryDate) {
+        this.lastSalaryDate = lastSalaryDate;
+    }
+
+    public int getAverageTimeOfReceivingSalary() {
+        return averageTimeOfReceivingSalary;
+    }
+
+    public void setAverageTimeOfReceivingSalary(int averageTimeOfReceivingSalary) {
+        this.averageTimeOfReceivingSalary = averageTimeOfReceivingSalary;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public boolean isInWorkplace() {
+        return inWorkplace;
+    }
+
+    public void setInWorkplace(boolean inWorkplace) {
+        this.inWorkplace = inWorkplace;
     }
 
     public String getCreatedBy() {
@@ -101,18 +162,23 @@ public class Employees implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employees employees = (Employees) o;
-        return Objects.equals(getId(), employees.getId()) &&
-                Objects.equals(getFirstName(), employees.getFirstName()) &&
-                Objects.equals(getLastName(), employees.getLastName()) &&
-                Objects.equals(getBirthDate(), employees.getBirthDate()) &&
-                Objects.equals(getCompany(), employees.getCompany()) &&
-                Objects.equals(getCreatedBy(), employees.getCreatedBy()) &&
-                Objects.equals(getCreatedWhen(), employees.getCreatedWhen());
+        return salary == employees.salary &&
+                averageTimeOfReceivingSalary == employees.averageTimeOfReceivingSalary &&
+                inWorkplace == employees.inWorkplace &&
+                Objects.equals(id, employees.id) &&
+                Objects.equals(firstName, employees.firstName) &&
+                Objects.equals(lastName, employees.lastName) &&
+                Objects.equals(birthDate, employees.birthDate) &&
+                Objects.equals(lastSalaryDate, employees.lastSalaryDate) &&
+                Objects.equals(position, employees.position) &&
+                Objects.equals(department, employees.department) &&
+                Objects.equals(createdBy, employees.createdBy) &&
+                Objects.equals(createdWhen, employees.createdWhen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getBirthDate(), getCompany(), getCreatedBy(), getCreatedWhen());
+        return Objects.hash(id, firstName, lastName, birthDate, salary, lastSalaryDate, averageTimeOfReceivingSalary, position, department, inWorkplace, createdBy, createdWhen);
     }
 
     @Override
@@ -122,7 +188,12 @@ public class Employees implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
-                ", company=" + company.toString() +
+                ", salary=" + salary +
+                ", lastSalaryDate=" + lastSalaryDate +
+                ", averageTimeOfReceivingSalary=" + averageTimeOfReceivingSalary +
+                ", position=" + position +
+                ", department=" + department +
+                ", inWorkplace=" + inWorkplace +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdWhen=" + createdWhen +
                 '}';
