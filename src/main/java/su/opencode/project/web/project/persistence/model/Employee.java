@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EMPLOYEES")
-public class Employees implements Serializable {
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,10 +53,10 @@ public class Employees implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date createdWhen;
 
-    public Employees() {
+    public Employee() {
     }
 
-    public Employees(String createdBy, Date createdWhen) {
+    public Employee(String createdBy, Date createdWhen) {
         this.createdBy = createdBy;
         this.createdWhen = createdWhen;
     }
@@ -161,19 +161,19 @@ public class Employees implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employees employees = (Employees) o;
-        return salary == employees.salary &&
-                averageTimeOfReceivingSalary == employees.averageTimeOfReceivingSalary &&
-                inWorkplace == employees.inWorkplace &&
-                Objects.equals(id, employees.id) &&
-                Objects.equals(firstName, employees.firstName) &&
-                Objects.equals(lastName, employees.lastName) &&
-                Objects.equals(birthDate, employees.birthDate) &&
-                Objects.equals(lastSalaryDate, employees.lastSalaryDate) &&
-                Objects.equals(position, employees.position) &&
-                Objects.equals(department, employees.department) &&
-                Objects.equals(createdBy, employees.createdBy) &&
-                Objects.equals(createdWhen, employees.createdWhen);
+        Employee employee = (Employee) o;
+        return salary == employee.salary &&
+                averageTimeOfReceivingSalary == employee.averageTimeOfReceivingSalary &&
+                inWorkplace == employee.inWorkplace &&
+                Objects.equals(id, employee.id) &&
+                Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(birthDate, employee.birthDate) &&
+                Objects.equals(lastSalaryDate, employee.lastSalaryDate) &&
+                Objects.equals(position, employee.position) &&
+                Objects.equals(department, employee.department) &&
+                Objects.equals(createdBy, employee.createdBy) &&
+                Objects.equals(createdWhen, employee.createdWhen);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class Employees implements Serializable {
 
     @Override
     public String toString() {
-        return "Employees{" +
+        return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

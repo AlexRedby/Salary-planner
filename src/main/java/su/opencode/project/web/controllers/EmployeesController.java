@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import su.opencode.project.web.project.persistence.model.Company;
-import su.opencode.project.web.project.persistence.model.Employees;
+import su.opencode.project.web.project.persistence.model.Employee;
 import su.opencode.project.web.project.persistence.services.CompaniesDataService;
 import su.opencode.project.web.project.persistence.services.EmployeesDataService;
 
@@ -24,8 +24,8 @@ public class EmployeesController {
 
     @GetMapping
     public ModelAndView getEmployeesPage() {
-        List<Employees> employees = new ArrayList<>();
-        employees.addAll((Collection<? extends Employees>) employeesDataService.findAll());
+        List<Employee> employees = new ArrayList<>(
+                (Collection<? extends Employee>) employeesDataService.findAll());
 
         return getEmployeesModalAndView(employees);
     }
@@ -37,6 +37,7 @@ public class EmployeesController {
         return "redirect:/employees";
     }
 
+    // TODO: Replace company to department
     @PostMapping("/save")
     public String save(
             @RequestParam("firstName") String firstName,
@@ -46,15 +47,15 @@ public class EmployeesController {
             @RequestParam("company") Long companyId
     ) {
         try {
-            Company company = new Company();
-            company.setId(companyId);
+            //Company company = new Company();
+            //company.setId(companyId);
 
-            Employees newEmployee = new Employees("Alex", new Date());
+            Employee newEmployee = new Employee("Alex", new Date());
             newEmployee.setId(id);
             newEmployee.setFirstName(firstName);
             newEmployee.setLastName(lastName);
             newEmployee.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(birthDate));
-            newEmployee.setCompany(company);
+            //newEmployee.setCompany(company);
 
             // Если есть id обновит запись, иначе добавит как новую
             employeesDataService.save(newEmployee);
@@ -70,9 +71,9 @@ public class EmployeesController {
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName
     ) {
-        List<Employees> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
 
-        Optional<Employees> optionalEmployees = employeesDataService.findByFirstNameAndLastName(firstName, lastName);
+        Optional<Employee> optionalEmployees = employeesDataService.findByFirstNameAndLastName(firstName, lastName);
         optionalEmployees.ifPresent(employees::add);
 
         return getEmployeesModalAndView(employees);
@@ -84,7 +85,7 @@ public class EmployeesController {
             @RequestParam("compare") String compare,
             @RequestParam("age") Integer age
     ) {
-        List<Employees> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
 
         Calendar c = Calendar.getInstance();
         c.add(Calendar.YEAR, -age);
@@ -92,19 +93,19 @@ public class EmployeesController {
 
         switch (compare) {
             case "younger":
-                employees.addAll((Collection<? extends Employees>) employeesDataService.findAllByBirthDateMoreThan(date));
+                employees.addAll((Collection<? extends Employee>) employeesDataService.findAllByBirthDateMoreThan(date));
                 break;
             case "older":
-                employees.addAll((Collection<? extends Employees>) employeesDataService.findAllByBirthDateLessThan(date));
+                employees.addAll((Collection<? extends Employee>) employeesDataService.findAllByBirthDateLessThan(date));
                 break;
         }
 
         return getEmployeesModalAndView(employees);
     }
 
-    private ModelAndView getEmployeesModalAndView(List<Employees> employees) {
-        List<Company> companies = new ArrayList<>();
-        companies.addAll((Collection<? extends Company>) companiesDataService.findAll());
+    private ModelAndView getEmployeesModalAndView(List<Employee> employees) {
+        List<Company> companies = new ArrayList<>(
+                (Collection<? extends Company>) companiesDataService.findAll());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("employees", employees);

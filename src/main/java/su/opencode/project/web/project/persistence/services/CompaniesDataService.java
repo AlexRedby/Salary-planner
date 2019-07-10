@@ -23,7 +23,7 @@ public class CompaniesDataService {
     }
 
     @Transactional
-    public Company save(Company employees) {
-        return companiesCrudRepository.save(employees);
+    public Company save(Company company) {
+        return companiesCrudRepository.save(company);
     }
 }

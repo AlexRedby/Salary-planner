@@ -18,7 +18,7 @@ public class Department implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "department")
-    private Set<Employees> employees;
+    private Set<Employee> employees;
 
     @ManyToOne
     @JoinColumn(name = "COMPANY_ID")
@@ -40,11 +40,11 @@ public class Department implements Serializable {
         this.name = name;
     }
 
-    public Set<Employees> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Set<Employees> employees) {
+    public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
 

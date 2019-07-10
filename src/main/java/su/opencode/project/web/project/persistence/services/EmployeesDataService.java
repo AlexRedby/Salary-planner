@@ -1,10 +1,9 @@
 package su.opencode.project.web.project.persistence.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import su.opencode.project.web.project.persistence.model.Employees;
+import su.opencode.project.web.project.persistence.model.Employee;
 import su.opencode.project.web.project.persistence.repositories.EmployeesCrudRepository;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class EmployeesDataService {
     private EmployeesCrudRepository employeesCrudRepository;
 
     @Transactional
-    public Iterable<Employees> findAll() {
+    public Iterable<Employee> findAll() {
         return employeesCrudRepository.findAll();
     }
 
@@ -27,22 +26,22 @@ public class EmployeesDataService {
     }
 
     @Transactional
-    public Employees save(Employees employees) {
-        return employeesCrudRepository.save(employees);
+    public Employee save(Employee employee) {
+        return employeesCrudRepository.save(employee);
     }
 
     @Transactional
-    public Optional<Employees> findByFirstNameAndLastName(String firstName, String lastName) {
+    public Optional<Employee> findByFirstNameAndLastName(String firstName, String lastName) {
         return employeesCrudRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
     @Transactional
-    public Iterable<Employees> findAllByBirthDateMoreThan(Date date) {
+    public Iterable<Employee> findAllByBirthDateMoreThan(Date date) {
         return employeesCrudRepository.findAllByBirthDateMoreThan(date);
     }
 
     @Transactional
-    public Iterable<Employees> findAllByBirthDateLessThan(Date date) {
+    public Iterable<Employee> findAllByBirthDateLessThan(Date date) {
         return employeesCrudRepository.findAllByBirthDateLessThan(date);
     }
 }

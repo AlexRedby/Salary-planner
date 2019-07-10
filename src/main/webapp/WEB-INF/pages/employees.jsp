@@ -49,7 +49,7 @@
         <div class="card-body">
             <div class="tab-content">
                 <div class="tab-pane active" id="filter-by-name" role="tabpanel" aria-labelledby="filter-by-name-tab">
-                    <form action="${pageContext.request.contextPath}/employees/findByName" method="post">
+                    <form action="${pageContext.request.contextPath}/employee/findByName" method="post">
                         <div class="form-row">
                             <div class="col">
                                 <input type="text" class="form-control" name="firstName" placeholder="First name">
@@ -64,7 +64,7 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="filter-by-birth-date" role="tabpanel" aria-labelledby="filter-by-birth-date-tab">
-                    <form action="${pageContext.request.contextPath}/employees/findByAge" method="post" class="form-inline">
+                    <form action="${pageContext.request.contextPath}/employee/findByAge" method="post" class="form-inline">
 
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
@@ -99,13 +99,13 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${employees}" var="employees">
+        <c:forEach items="${employee}" var="employee">
             <tr onclick="selectRow(this);">
-                <td scope="row">${employees.id}</td>
-                <td>${employees.firstName}</td>
-                <td>${employees.lastName}</td>
-                <td><fmt:formatDate value="${employees.birthDate}" pattern="yyyy-MM-dd"/></td>
-                <td>${employees.company.name}</td>
+                <td scope="row">${employee.id}</td>
+                <td>${employee.firstName}</td>
+                <td>${employee.lastName}</td>
+                <td><fmt:formatDate value="${employee.birthDate}" pattern="yyyy-MM-dd"/></td>
+                <td>${employee.company.name}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -113,7 +113,7 @@
 
     <button id="addButton" type="button" class="btn btn-primary" onclick="addNewEmployee();">Add new</button>
     <button id="editButton" type="button" class="btn btn-secondary" onclick="editSelectedEmployee();" disabled>Edit</button>
-    <form id="deleteForm" action="${pageContext.request.contextPath}/employees/delete" method="post" style="display: inline-block;">
+    <form id="deleteForm" action="${pageContext.request.contextPath}/employee/delete" method="post" style="display: inline-block;">
         <input type="hidden" name="id">
         <button id="deleteButton" type="submit" class="btn btn-secondary" disabled>Delete</button>
     </form>
@@ -123,7 +123,7 @@
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="${pageContext.request.contextPath}/employees/save" method="post">
+            <form action="${pageContext.request.contextPath}/employee/save" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditTitle">Add/Edit Modal</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

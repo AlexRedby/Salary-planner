@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import su.opencode.project.web.project.persistence.model.Company;
-import su.opencode.project.web.project.persistence.model.Employees;
+import su.opencode.project.web.project.persistence.model.Employee;
 import su.opencode.project.web.project.persistence.services.CompaniesDataService;
 import su.opencode.project.web.project.persistence.services.EmployeesDataService;
 
@@ -22,6 +22,7 @@ public class InitController {
     @Autowired
     CompaniesDataService companiesDataService;
 
+    // TODO: Add new init code for new entities
     @GetMapping
     public String init() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -35,25 +36,25 @@ public class InitController {
             c2.setName("Компания №2");
             c2 = companiesDataService.save(c2);
 
-            Employees emp = new Employees("Alex", new Date());
+            Employee emp = new Employee("Alex", new Date());
             emp.setFirstName("Alex");
             emp.setLastName("Vinogradow");
             emp.setBirthDate(sdf.parse("04-03-1997"));
-            emp.setCompany(c1);
+            //emp.setCompany(c1);
             employeesDataService.save(emp);
 
-            emp = new Employees("Alex", new Date());
+            emp = new Employee("Alex", new Date());
             emp.setFirstName("Roma");
             emp.setLastName("Putin");
             emp.setBirthDate(sdf.parse("12-12-2000"));
-            emp.setCompany(c1);
+            //emp.setCompany(c1);
             employeesDataService.save(emp);
 
-            emp = new Employees("Alex", new Date());
+            emp = new Employee("Alex", new Date());
             emp.setFirstName("Sasha");
             emp.setLastName("Bil");
             emp.setBirthDate(sdf.parse("20-01-2013"));
-            emp.setCompany(c2);
+            //emp.setCompany(c2);
             employeesDataService.save(emp);
         }
         catch (ParseException ex) {
