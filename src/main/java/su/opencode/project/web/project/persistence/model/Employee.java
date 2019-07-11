@@ -22,21 +22,20 @@ public class Employee implements Serializable {
     private String lastName;
 
     @Column(name = "BIRTH_DATE", nullable = false)
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date birthDate;
 
     @Column(name = "SALARY", nullable = false)
     private int salary;
 
     @Column(name = "LAST_SALARY_DATE")
-    @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDate lastSalaryDate;
 
     @Column(name = "AVG_TIME_RECEIVING_SALARY")
     private int averageTimeOfReceivingSalary;
 
     @ManyToOne
-    @Column(name = "POSITION", nullable = false)
+    @JoinColumn(name = "POSITION_ID", nullable = false)
     private Position position;
 
     @ManyToOne(fetch = FetchType.LAZY)
