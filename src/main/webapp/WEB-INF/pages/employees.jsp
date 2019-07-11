@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:page>
+<t:page title="Employees">
     <h1 class="text-center">Employees</h1>
 
     <div class="card bg-light mb-3">
@@ -60,79 +60,75 @@
         </div>
     </div>
 
-    <table class="table table-hover">
-        <thead class="thead-light">
-        <tr>
+    <t:table>
+        <jsp:attribute name="tableHeader">
             <th scope="col">ID</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Birth Date</th>
             <th scope="col">Company</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${employee}" var="employee">
-            <tr onclick="selectRow(this);">
-                <td scope="row">${employee.id}</td>
-                <td>${employee.firstName}</td>
-                <td>${employee.lastName}</td>
-                <td><fmt:formatDate value="${employee.birthDate}" pattern="yyyy-MM-dd"/></td>
-                <td>${employee.company.name}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+        </jsp:attribute>
+        <jsp:body>
+            <c:forEach items="${employee}" var="employee">
+                <tr onclick="selectRow(this);">
+                    <td scope="row">${employee.id}</td>
+                    <td>${employee.firstName}</td>
+                    <td>${employee.lastName}</td>
+                    <td><fmt:formatDate value="${employee.birthDate}" pattern="yyyy-MM-dd"/></td>
+                    <td>${employee.company.name}</td>
+                </tr>
+            </c:forEach>
+        </jsp:body>
+    </t:table>
 
-    <button id="addButton" type="button" class="btn btn-primary" onclick="addNewEmployee();">Add new</button>
-    <button id="editButton" type="button" class="btn btn-secondary" onclick="editSelectedEmployee();" disabled>Edit</button>
+    <button id="addButton" type="button" class="btn btn-primary" onclick="addNewEntity(clearEmployeeModal);">Add new</button>
+    <button id="editButton" type="button" class="btn btn-secondary" onclick="editSelectedEntity(fillEmployeeModal);" disabled>Edit</button>
     <form id="deleteForm" action="${pageContext.request.contextPath}/employee/delete" method="post" style="display: inline-block;">
         <input type="hidden" name="id">
         <button id="deleteButton" type="submit" class="btn btn-secondary" disabled>Delete</button>
     </form>
 
-    <!-- TODO: Вынести в отдельный тег -->
-<!-- Modal -->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="${pageContext.request.contextPath}/employee/save" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditTitle">Add/Edit Modal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="id">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter employee first name">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter employee last name">
-                    </div>
-                    <div class="form-group">
-                        <label for="birthDate">Birth Date</label>
-                        <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Enter employee birth date">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company</label>
-                        <select class="custom-select" name="company" id="company">
-                            <option selected disabled>Select company</option>
-                            <c:forEach items="${companies}" var="company">
-                                <option value="${company.id}">${company.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+    <t:modal title="Add/Edit employee window" formAction="${pageContext.request.contextPath}/employee/save">
+        <input type="hidden" name="id" id="id">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter employee first name">
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter employee last name">
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth Date</label>
+            <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Enter employee birth date">
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <select class="custom-select" name="company" id="company">
+                <option selected disabled>Select company</option>
+                <c:forEach items="${companies}" var="company">
+                    <option value="${company.id}">${company.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </t:modal>
+    <script>
+        function fillEmployeeModal() {
+            console.log("Test: fillEmployeeModal");
+            document.getElementById('id').value = selectedRow.children[0].innerText;
+            document.getElementById('firstName').value = selectedRow.children[1].innerText;
+            document.getElementById('lastName').value = selectedRow.children[2].innerText;
+            document.getElementById('birthDate').value = selectedRow.children[3].innerText;
+            // TODO: Как-то переность компанию тоже
+        }
 
+        function clearEmployeeModal() {
+            console.log("Test: Inside clearEmployeeModal");
+            document.getElementById('id').value = "";
+            document.getElementById('firstName').value = "";
+            document.getElementById('lastName').value = "";
+            document.getElementById('birthDate').value = "";
+            document.getElementById('company').children[0].selected = true;
+        }
+    </script>
 </t:page>

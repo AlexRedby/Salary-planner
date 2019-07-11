@@ -1,4 +1,6 @@
 <%@ tag description="Wrapper for all pages of web-app" pageEncoding="UTF-8"%>
+<%@ attribute name="title" required="true"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>Employees</title>
+        <title>${title}</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
