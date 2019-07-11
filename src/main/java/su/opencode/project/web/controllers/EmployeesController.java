@@ -103,13 +103,14 @@ public class EmployeesController {
         return getEmployeesModalAndView(employees);
     }
 
+    // TODO: Добавить сюда подгрузку должностей(positions) и отделов(departments)
     private ModelAndView getEmployeesModalAndView(List<Employee> employees) {
-        List<Company> companies = new ArrayList<>(
-                (Collection<? extends Company>) companiesDataService.findAll());
+//        List<Company> companies = new ArrayList<>(
+//                (Collection<? extends Company>) companiesDataService.findAll());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("employees", employees);
-        modelAndView.addObject("companies", companies);
+//        modelAndView.addObject("companies", companies);
         modelAndView.setViewName("employees");
         return modelAndView;
     }

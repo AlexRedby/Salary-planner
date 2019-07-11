@@ -66,16 +66,22 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Birth Date</th>
-            <th scope="col">Company</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Position</th>
+            <th scope="col">Department</th>
         </jsp:attribute>
         <jsp:body>
-            <c:forEach items="${employee}" var="employee">
+            <c:forEach items="${employees}" var="employee">
                 <tr onclick="selectRow(this);">
                     <td scope="row">${employee.id}</td>
                     <td>${employee.firstName}</td>
                     <td>${employee.lastName}</td>
                     <td><fmt:formatDate value="${employee.birthDate}" pattern="yyyy-MM-dd"/></td>
-                    <td>${employee.company.name}</td>
+                    <td>${employee.salary}</td>
+                    <td style="display:none;">${employee.position.id}</td>
+                    <td>${employee.position.name}</td>
+                    <td style="display:none;">${employee.department.id}</td>
+                    <td>${employee.department.name}</td>
                 </tr>
             </c:forEach>
         </jsp:body>
@@ -103,32 +109,47 @@
             <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Enter employee birth date">
         </div>
         <div class="form-group">
-            <label for="company">Company</label>
-            <select class="custom-select" name="company" id="company">
-                <option selected disabled>Select company</option>
-                <c:forEach items="${companies}" var="company">
-                    <option value="${company.id}">${company.name}</option>
+            <label for="lastName">Salary</label>
+            <input type="number" min="0" class="form-control" id="salary" name="salary" placeholder="Enter employee salary">
+        </div>
+        <div class="form-group">
+            <label for="position">Position</label>
+            <select class="custom-select" name="position" id="position">
+                <option selected disabled>Select position</option>
+                <c:forEach items="${positions}" var="position">
+                    <option value="${position.id}">${position.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="department">Department</label>
+            <select class="custom-select" name="department" id="department">
+                <option selected disabled>Select department</option>
+                <c:forEach items="${departments}" var="department">
+                    <option value="${department.id}">${department.name}</option>
                 </c:forEach>
             </select>
         </div>
     </t:modal>
     <script>
         function fillEmployeeModal() {
-            console.log("Test: fillEmployeeModal");
             document.getElementById('id').value = selectedRow.children[0].innerText;
             document.getElementById('firstName').value = selectedRow.children[1].innerText;
             document.getElementById('lastName').value = selectedRow.children[2].innerText;
             document.getElementById('birthDate').value = selectedRow.children[3].innerText;
-            // TODO: Как-то переность компанию тоже
+            document.getElementById('salary').value = selectedRow.children[4].innerHTML;
+            document.getElementById('position').value = selectedRow.children[5].innerHTML;
+            document.getElementById('department').value = selectedRow.children[7].innerHTML;
         }
 
         function clearEmployeeModal() {
-            console.log("Test: Inside clearEmployeeModal");
             document.getElementById('id').value = "";
             document.getElementById('firstName').value = "";
             document.getElementById('lastName').value = "";
             document.getElementById('birthDate').value = "";
-            document.getElementById('company').children[0].selected = true;
+            document.getElementById('salary').value = 0;
+            document.getElementById('position').children[0].selected = true;
+            document.getElementById('department').children[0].selected = true;
         }
     </script>
 </t:page>

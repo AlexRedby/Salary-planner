@@ -17,7 +17,7 @@ public class Department implements Serializable {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
     private Set<Employee> employees;
 
     @ManyToOne

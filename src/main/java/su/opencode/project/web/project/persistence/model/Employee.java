@@ -38,7 +38,7 @@ public class Employee implements Serializable {
     @JoinColumn(name = "POSITION_ID", nullable = false)
     private Position position;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DEPARTMENT_ID", nullable = false)
     private Department department;
 
