@@ -69,7 +69,7 @@ public class Department implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, employees, company);
+        return Objects.hash(id, name, company);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Department implements Serializable {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", employees=" + employees +
+                ", employees count=" + employees.size() +
                 ", company=" + company +
                 '}';
     }

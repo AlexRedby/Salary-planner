@@ -94,7 +94,7 @@
         <button id="deleteButton" type="submit" class="btn btn-secondary" disabled>Delete</button>
     </form>
 
-    <t:modal title="Add/Edit employee window" formAction="${pageContext.request.contextPath}/employee/save">
+    <t:modal title="Add/Edit employee window" formAction="${pageContext.request.contextPath}/employee/save" formAttribute="employee">
         <input type="hidden" name="id" id="id">
         <div class="form-group">
             <label for="firstName">First Name</label>

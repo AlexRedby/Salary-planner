@@ -2,9 +2,9 @@ package su.opencode.project.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import su.opencode.project.web.project.persistence.model.Company;
 import su.opencode.project.web.project.persistence.model.Employee;
 import su.opencode.project.web.project.persistence.services.CompaniesDataService;
 import su.opencode.project.web.project.persistence.services.EmployeesDataService;
@@ -23,12 +23,21 @@ public class EmployeesController {
     CompaniesDataService companiesDataService;
 
     @GetMapping
-    public ModelAndView getEmployeesPage() {
+    public String getEmployeesPage(Model m) {
         List<Employee> employees = new ArrayList<>(
                 (Collection<? extends Employee>) employeesDataService.findAll());
 
-        return getEmployeesModalAndView(employees);
+        m.addAttribute("employee", new Employee());
+        m.addAttribute("employees", employees);
+
+        return "employees";
     }
+//    public ModelAndView getEmployeesPage() {
+//        List<Employee> employees = new ArrayList<>(
+//                (Collection<? extends Employee>) employeesDataService.findAll());
+//
+//        return getEmployeesModalAndView(employees);
+//    }
 
     @PostMapping("/delete")
     public String delete(@RequestParam("id") Long id) {

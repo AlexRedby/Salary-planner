@@ -11,6 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeesCrudRepository extends CrudRepository<Employee, Long> {
+
+    @Override
+    @Query("select e from Employee e inner join fetch e.department")
+    Iterable<Employee> findAll();
+
     Optional<Employee> findByFirstNameAndLastName(String firstName, String lastName);
 
     @Query("select e from Employee e where e.birthDate < :date")

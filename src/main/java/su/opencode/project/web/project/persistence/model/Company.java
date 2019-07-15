@@ -1,5 +1,7 @@
 package su.opencode.project.web.project.persistence.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,6 +16,7 @@ public class Company implements Serializable {
     private Long id;
 
     @Column(name = "NAME", nullable = false)
+    @NotBlank(message = "Company name is required")
     private String name;
 
     public Company() {

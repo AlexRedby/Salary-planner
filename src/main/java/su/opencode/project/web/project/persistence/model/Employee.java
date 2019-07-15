@@ -1,5 +1,8 @@
 package su.opencode.project.web.project.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EMPLOYEES")
+@JsonIgnoreProperties(value = {"department"})
 public class Employee implements Serializable {
 
     @Id
@@ -38,8 +42,9 @@ public class Employee implements Serializable {
     @JoinColumn(name = "POSITION_ID", nullable = false)
     private Position position;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", nullable = false)
+    @JsonProperty("department")
     private Department department;
 
     @Column(name = "IN_WORKPLACE", nullable = false)
@@ -191,7 +196,7 @@ public class Employee implements Serializable {
                 ", lastSalaryDate=" + lastSalaryDate +
                 ", averageTimeOfReceivingSalary=" + averageTimeOfReceivingSalary +
                 ", position=" + position +
-                ", department=" + department +
+                ", department=" + department.getName() +
                 ", inWorkplace=" + inWorkplace +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdWhen=" + createdWhen +

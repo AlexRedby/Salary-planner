@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import su.opencode.project.web.project.persistence.model.Department;
 import su.opencode.project.web.project.persistence.repositories.DepartmentsCrudRepository;
 
+import java.util.Optional;
+
 @Service
 public class DepartmentsDataService {
     @Autowired
@@ -14,6 +16,11 @@ public class DepartmentsDataService {
     @Transactional
     public Iterable<Department> findAll() {
         return departmentsCrudRepository.findAll();
+    }
+
+    @Transactional
+    public Optional<Department> findById(Long id) {
+        return departmentsCrudRepository.findById(id);
     }
 
     @Transactional
