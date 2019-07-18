@@ -11,7 +11,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EMPLOYEES")
-@JsonIgnoreProperties(value = {"department"})
 public class Employee implements Serializable {
 
     @Id
@@ -29,6 +28,9 @@ public class Employee implements Serializable {
     @Temporal(value = TemporalType.DATE)
     private Date birthDate;
 
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
+
     @Column(name = "SALARY", nullable = false)
     private int salary;
 
@@ -44,7 +46,6 @@ public class Employee implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", nullable = false)
-    @JsonProperty("department")
     private Department department;
 
     @Column(name = "IN_WORKPLACE", nullable = false)
@@ -95,6 +96,14 @@ public class Employee implements Serializable {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getSalary() {
@@ -166,23 +175,18 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return salary == employee.salary &&
-                averageTimeOfReceivingSalary == employee.averageTimeOfReceivingSalary &&
-                inWorkplace == employee.inWorkplace &&
-                Objects.equals(id, employee.id) &&
+        return Objects.equals(id, employee.id) &&
                 Objects.equals(firstName, employee.firstName) &&
                 Objects.equals(lastName, employee.lastName) &&
                 Objects.equals(birthDate, employee.birthDate) &&
-                Objects.equals(lastSalaryDate, employee.lastSalaryDate) &&
-                Objects.equals(position, employee.position) &&
-                Objects.equals(department, employee.department) &&
+                Objects.equals(email, employee.email) &&
                 Objects.equals(createdBy, employee.createdBy) &&
                 Objects.equals(createdWhen, employee.createdWhen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, birthDate, salary, lastSalaryDate, averageTimeOfReceivingSalary, position, department, inWorkplace, createdBy, createdWhen);
+        return Objects.hash(id, firstName, lastName, birthDate, email, createdBy, createdWhen);
     }
 
     @Override
@@ -192,11 +196,12 @@ public class Employee implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
+                ", birthDate='" + email + '\'' +
                 ", salary=" + salary +
                 ", lastSalaryDate=" + lastSalaryDate +
                 ", averageTimeOfReceivingSalary=" + averageTimeOfReceivingSalary +
                 ", position=" + position +
-                ", department=" + department.getName() +
+                ", department=" + (department != null ? department.getName() : "") +
                 ", inWorkplace=" + inWorkplace +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdWhen=" + createdWhen +

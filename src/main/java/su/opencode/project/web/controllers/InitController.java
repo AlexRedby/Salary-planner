@@ -99,6 +99,7 @@ public class InitController {
             emp.setAverageTimeOfReceivingSalary(30);
             emp.setInWorkplace(true);
             emp.setPosition(p1);
+            emp.setEmail("test@gmail.com");
             employeesDataService.save(emp);
 
             emp = new Employee("Alex", new Date());
@@ -110,6 +111,7 @@ public class InitController {
             emp.setAverageTimeOfReceivingSalary(15);
             emp.setInWorkplace(true);
             emp.setPosition(p2);
+            emp.setEmail("test2@gmail.com");
             employeesDataService.save(emp);
 
             emp = new Employee("Alex", new Date());
@@ -121,6 +123,7 @@ public class InitController {
             emp.setAverageTimeOfReceivingSalary(60);
             emp.setInWorkplace(false);
             emp.setPosition(p3);
+            emp.setEmail("test3@gmail.com");
             employeesDataService.save(emp);
 
             Random rnd = new Random();
@@ -134,6 +137,7 @@ public class InitController {
                 emp.setAverageTimeOfReceivingSalary(rnd.nextInt(60) + 10);
                 emp.setInWorkplace(rnd.nextBoolean());
                 emp.setPosition(positions[rnd.nextInt(positions.length)]);
+                emp.setEmail("generated" + i + "@gmail.com");
                 employeesDataService.save(emp);
             }
         }

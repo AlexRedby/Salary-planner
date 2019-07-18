@@ -36,6 +36,7 @@
                         <includes>
                             <include>messages.properties</include>
                             <include>jdbc.properties</include>
+                            <include>mail.properties</include>
                             <include>hibernate.cfg.xml</include>
                         </includes>
                     </resource>
@@ -66,6 +67,13 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>2.1.9.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>2.1.6.RELEASE</version>
         </dependency>
 
         <!--  JSR 303 with Hibernate Validator -->

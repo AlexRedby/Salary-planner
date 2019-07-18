@@ -21,6 +21,11 @@ public class EmployeesDataService {
     }
 
     @Transactional
+    public Optional<Employee> findById(Long id) {
+        return employeesCrudRepository.findById(id);
+    }
+
+    @Transactional
     public void deleteById(Long id) {
         employeesCrudRepository.deleteById(id);
     }

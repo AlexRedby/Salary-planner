@@ -4,12 +4,13 @@
              xmlns:mvc="http://www.springframework.org/schema/mvc"
              xmlns:context="http://www.springframework.org/schema/context"
              xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:jee="http://www.springframework.org/schema/jee"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
              http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd"
 >
 
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
@@ -57,7 +58,7 @@
 
     <!-- Application Message Bundle -->
     <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames" value="/WEB-INF/classes/messages"/>
+<!--        <property name="basenames" value="/WEB-INF/classes/messages"/>-->
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="0"/>
     </beans:bean>
@@ -80,7 +81,23 @@
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:messages.properties</value>
+                <value>classpath:mail.properties</value>
             </list>
+        </property>
+    </bean>
+
+    <context:property-placeholder location="classpath:mail.properties"/>
+    <bean id="javaMailSender" name="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${spring.mail.host}"/>
+        <property name="port" value="${spring.mail.port}"/>
+        <property name="username" value="${spring.mail.username}"/>
+        <property name="password" value="${spring.mail.password}"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">${spring.mail.properties.mail.transport.protocol}</prop>
+                <prop key="mail.smtp.auth">${spring.mail.properties.mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${spring.mail.properties.mail.smtp.starttls.enable}</prop>
+            </props>
         </property>
     </bean>
 

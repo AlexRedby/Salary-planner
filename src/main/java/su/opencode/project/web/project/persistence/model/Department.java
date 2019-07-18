@@ -1,5 +1,8 @@
 package su.opencode.project.web.project.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "DEPARTMENTS")
+@JsonIgnoreProperties(value = {"employees"})
 public class Department implements Serializable {
 
     @Id
@@ -18,6 +22,7 @@ public class Department implements Serializable {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
+    @JsonProperty("employees")
     private Set<Employee> employees;
 
     @ManyToOne

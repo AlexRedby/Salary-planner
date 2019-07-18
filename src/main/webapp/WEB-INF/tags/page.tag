@@ -1,5 +1,6 @@
 <%@ tag description="Wrapper for all pages of web-app" pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="true"%>
+<%@ attribute name="extraCssAndJs" fragment="true"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +30,8 @@
                 crossorigin="anonymous"></script>
         <!-- MY JavaScript -->
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
+
+        <jsp:invoke fragment="extraCssAndJs"/>
     </head>
     <body>
         <div class="container">

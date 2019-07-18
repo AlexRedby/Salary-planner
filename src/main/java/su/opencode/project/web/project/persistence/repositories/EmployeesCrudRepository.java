@@ -16,6 +16,10 @@ public interface EmployeesCrudRepository extends CrudRepository<Employee, Long> 
     @Query("select e from Employee e inner join fetch e.department")
     Iterable<Employee> findAll();
 
+    @Override
+    @Query("select e from Employee e inner join fetch e.department where e.id = :id")
+    Optional<Employee> findById(@Param("id") Long id);
+
     Optional<Employee> findByFirstNameAndLastName(String firstName, String lastName);
 
     @Query("select e from Employee e where e.birthDate < :date")
